@@ -37,3 +37,25 @@ class DataJson:
         except AttributeError:
             return 'Something went wrong with the API request'
         return api_response.json()
+
+class Cleaner:
+    def __init__(self, json: list):
+        self.json = json
+
+    def identify_statement(self):
+        return self.json.financial_statement
+
+    def construct_dict(self, identify_statement):
+        '''
+        constructs a dict data structure populated with appropriate json data
+        based on identify_statement function
+        {'row': (xx, xx, xx, xx, xx),
+        'row': (xx, xx, xx, xx, xx,)}
+        '''
+        if identify_statement == 'income_statement':
+            pass
+        elif identify_statement == 'cash-flow-statement':
+            pass
+        else:
+            # 'key-metrics' statement
+            pass
