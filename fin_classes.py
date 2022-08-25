@@ -4,58 +4,33 @@ import requests
 
 load_dotenv()
 
-'''
-ebitda_dict = {}
-for year in json:
-    ebitda_dict[year['calendarYear']] = year['ebitda']
-print(ebitda_dict)
-'''
 # ebitda (income statement), roic(financial metric), roe (financial metric), earningsyield (financial metric), freecashflow (cashflow statement)
 class DataJson:
     BASE_URL = 'https://financialmodelingprep.com/api/v3'
     PAYLOAD = {"limit": 120, "apikey": os.getenv('API_KEY')}
 
-    def __init__(self, financial_statement: str, stock_symbol: str):
+    def __init__(self, stock_symbol: str):
         # Validations of received arguments
         assert len(stock_symbol) <= 5, 'Your stock symbol is too long'
-        assert financial_statement in ['income-statement', 'cash-flow-statement', 'key-metrics']
-
+        
         # Assign to self object
         self.stock_symbol = stock_symbol
-        self.financial_statement = financial_statement
-        self.url = self.set_url()
+        self.financial_statement = ['income-statement', 'cash-flow-statement', 'key-metrics', 'balance-sheet-statement']
+        self.income_request_dict = self.get_json_data(self.set_url(self.financial_statement[0]))[0]
+        self.key_metric_request_dict = self.get_json_data(self.set_url(self.financial_statement[1]))[0]
+        self.cashflow_request_dict = self.get_json_data(self.set_url(self.financial_statement[2]))[0]
+        self.balance_request_dict = self.get_json_data(self.set_url(self.financial_statement[3]))[0]
 
-    def set_url(self):
-        return f'{self.BASE_URL}/{self.financial_statement}/{self.stock_symbol}'
+    def set_url(self, financial_statement: str):
+        return f'{self.BASE_URL}/{financial_statement}/{self.stock_symbol}'
 
-    def get_url(self):
-        return self.url
-
-    def get_json_data(self):
+    def get_json_data(self, url: str):
         try:
-            api_response = requests.get(self.get_url(), self.PAYLOAD)
+            api_response = requests.get(url, self.PAYLOAD)
+            return api_response.json()
         except AttributeError:
             return 'Something went wrong with the API request'
-        return api_response.json()
 
 class Cleaner:
     def __init__(self, json: list):
         self.json = json
-
-    def identify_statement(self):
-        return self.json.financial_statement
-
-    def construct_dict(self, identify_statement):
-        '''
-        constructs a dict data structure populated with appropriate json data
-        based on identify_statement function
-        {'row': (xx, xx, xx, xx, xx),
-        'row': (xx, xx, xx, xx, xx,)}
-        '''
-        if identify_statement == 'income_statement':
-            pass
-        elif identify_statement == 'cash-flow-statement':
-            pass
-        else:
-            # 'key-metrics' statement
-            pass
