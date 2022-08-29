@@ -16,10 +16,10 @@ class DataJson:
         # Assign to self object
         self.stock_symbol = stock_symbol
         self.financial_statement = ['income-statement', 'cash-flow-statement', 'key-metrics', 'balance-sheet-statement']
-        self.income_request_dict = self.get_json_data(self.set_url(self.financial_statement[0]))[0]
-        self.key_metric_request_dict = self.get_json_data(self.set_url(self.financial_statement[1]))[0]
-        self.cashflow_request_dict = self.get_json_data(self.set_url(self.financial_statement[2]))[0]
-        self.balance_request_dict = self.get_json_data(self.set_url(self.financial_statement[3]))[0]
+        self.income_request_dict = self.get_json_data(self.set_url(self.financial_statement[0]))
+        self.key_metric_request_dict = self.get_json_data(self.set_url(self.financial_statement[1]))
+        self.cashflow_request_dict = self.get_json_data(self.set_url(self.financial_statement[2]))
+        self.balance_request_dict = self.get_json_data(self.set_url(self.financial_statement[3]))
 
     def set_url(self, financial_statement: str):
         return f'{self.BASE_URL}/{financial_statement}/{self.stock_symbol}'
@@ -31,6 +31,6 @@ class DataJson:
         except AttributeError:
             return 'Something went wrong with the API request'
 
-class Cleaner:
-    def __init__(self, json: list):
-        self.json = json
+def json_to_dict(json_data: list):
+    statement_dict = {year['calendarYear']: year for year in json_data}
+    return statement_dict
