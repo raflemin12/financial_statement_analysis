@@ -34,13 +34,16 @@ class DataJson:
 def json_to_dict(json_data: list):
     # statement_dict = {year['calendarYear']: year for year in json_data}
     statement_dict = {}
+    years = []
 
     for year in json_data:
-        statement_dict[year['calendarYear']] = {}
-        financials = year.items()[7:]
-        for point in financials:
-            statement_dict[year['calendarYear']][point[0]] = point[1]
-    return statement_dict
+        years.append(year['calendarYear'])
+        for key, value in year.items()[7:]:
+            if key not in statement_dict.items():
+                statement_dict[key] = [value]
+            else:
+                statement_dict[key].append(value)
+    return (years,statement_dict)
 
 nke = DataJson('NKE')
 print(json_to_dict(nke.income_request_json))
