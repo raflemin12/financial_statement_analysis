@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 import requests
+import pandas as pd
 
 load_dotenv()
 
@@ -44,6 +45,9 @@ def json_to_dict(json_data: list):
             else:
                 statement_dict[key].append(value)
     return (years,statement_dict)
+
+def dict_to_dataframe(data_dict: dict, column_names: list):
+    return pd.DataFrame.from_dict(data_dict, orient='index', columns= column_names)
 
 nke = DataJson('NKE')
 print(json_to_dict(nke.income_request_json))
