@@ -49,5 +49,6 @@ def json_to_dict(json_data: list):
 def dict_to_dataframe(data_dict: dict, column_names: list):
     return pd.DataFrame.from_dict(data_dict, orient='index', columns= column_names)
 
-nke = DataJson('NKE')
-print(json_to_dict(nke.income_request_json))
+dis = DataJson('DIS')
+print(json_to_dict(dis.income_request_json))
+print(type(dict_to_dataframe(json_to_dict(dis.income_request_json))))
