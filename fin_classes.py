@@ -33,7 +33,6 @@ class DataJson:
             return 'Something went wrong with the API request'
 
 def json_to_dict(json_data: list):
-    # statement_dict = {year['calendarYear']: year for year in json_data}
     statement_dict = {}
     years = []
 
@@ -51,4 +50,5 @@ def dict_to_dataframe(data_dict: dict, column_names: list):
 
 dis = DataJson('DIS')
 print(json_to_dict(dis.income_request_json))
-print(type(dict_to_dataframe(json_to_dict(dis.income_request_json))))
+dis_income_statements = json_to_dict(dis.income_request_json)
+print(type(dict_to_dataframe(data_dict =dis_income_statements[1], column_names=dis_income_statements[0])))
