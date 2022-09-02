@@ -12,7 +12,7 @@ class DataJson:
 
     def __init__(self, stock_symbol: str):
         # Validations of received arguments
-        assert len(stock_symbol) > 5, 'Your stock symbol is too long'
+        assert len(stock_symbol) <= 5, 'Your stock symbol is too long'
         
         # Assign to self object
         self.stock_symbol = stock_symbol
@@ -38,8 +38,8 @@ def json_to_dict(json_data: list):
 
     for year in json_data:
         years.append(year['calendarYear'])
-        for key, value in year.items()[7:]:
-            if key not in statement_dict.items():
+        for key, value in year.items():
+            if key not in statement_dict:
                 statement_dict[key] = [value]
             else:
                 statement_dict[key].append(value)
@@ -51,4 +51,4 @@ def dict_to_dataframe(data_dict: dict, column_names: list):
 dis = DataJson('DIS')
 print(json_to_dict(dis.income_request_json))
 dis_income_statements = json_to_dict(dis.income_request_json)
-print(type(dict_to_dataframe(data_dict =dis_income_statements[1], column_names=dis_income_statements[0])))
+print(type(dict_to_dataframe(dis_income_statements[1], dis_income_statements[0])))
