@@ -3,6 +3,7 @@ from fin_classes import DataJson, json_to_dict, dict_to_dataframe
 
 st.title('Company Financials Dashboard')
 
+# cache JSON data
 dis = DataJson('DIS')
 
 financial_statement_options = st.selectbox(
