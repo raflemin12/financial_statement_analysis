@@ -4,6 +4,13 @@ from fin_classes import DataJson, json_to_dict, dict_to_dataframe
 st.title('Company Financials Dashboard')
 
 dis = DataJson('DIS')
+
+financial_statement_options = st.selectbox(
+    "What financial statement would you like to analyze?",
+    ("Income Statement", "Balance Sheet", "Cashflow Statement")
+)
+# load appropriate data depending on selection
+
 dis_income_statements_json = json_to_dict(dis.income_request_json)
 dis_income_statements_df = dict_to_dataframe(
     dis_income_statements_json[1],
