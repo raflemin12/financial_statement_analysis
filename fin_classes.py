@@ -47,3 +47,8 @@ def json_to_dict(json_data: list):
 
 def dict_to_dataframe(data_dict: dict, column_names: list):
     return pd.DataFrame.from_dict(data_dict, orient='index', columns= column_names)
+
+def clean_rows(df):
+    first_seven = df.drop(df.index[:8])
+    last_two = first_seven.drop(df.index[-2:])
+    return last_two
