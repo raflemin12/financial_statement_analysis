@@ -37,18 +37,13 @@ def json_to_dict(json_data: list):
     years = []
 
     for year in json_data:
-        years.append(year['calendarYear'])
+        years.insert(0, year['calendarYear'])
         for key, value in year.items():
             if key not in statement_dict:
                 statement_dict[key] = [value]
             else:
-                statement_dict[key].append(value)
+                statement_dict[key].insert(0, value)
     return (years,statement_dict)
 
 def dict_to_dataframe(data_dict: dict, column_names: list):
     return pd.DataFrame.from_dict(data_dict, orient='index', columns= column_names)
-
-dis = DataJson('DIS')
-print(json_to_dict(dis.income_request_json))
-dis_income_statements = json_to_dict(dis.income_request_json)
-print(type(dict_to_dataframe(dis_income_statements[1], dis_income_statements[0])))
