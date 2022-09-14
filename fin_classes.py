@@ -13,7 +13,7 @@ class DataJson:
     def __init__(self, stock_symbol: str):
         # Validations of received arguments
         assert len(stock_symbol) <= 5, 'Your stock symbol is too long'
-        
+
         # Assign to self object
         self.stock_symbol = stock_symbol
         self.financial_statement = ['income-statement', 'cash-flow-statement', 'key-metrics', 'balance-sheet-statement']
@@ -31,6 +31,18 @@ class DataJson:
             return api_response.json()
         except AttributeError:
             return 'Something went wrong with the API request'
+
+    def get_income_statement_json(self):
+        return self.income_request_json
+
+    def get_cashflow_statement_json(self):
+        return self.cashflow_request_json
+
+    def get_balance_sheet_json(self):
+        return self.balance_request_json
+
+    def get_key_metrics_json(self):
+        return self.key_metric_request_json
 
 def json_to_dict(json_data: list):
     statement_dict = {}
@@ -52,3 +64,13 @@ def clean_rows(df):
     first_seven = df.drop(df.index[:8])
     last_two = first_seven.drop(df.index[-2:])
     return last_two
+
+def json_to_df(json_data):
+    stock_income_statements_json = json_to_dict(json_data)
+    stock_income_statements_df = clean_rows(
+        dict_to_dataframe(
+            stock_income_statements_json[1],
+            stock_income_statements_json[0]
+            )
+        )
+    return stock_income_statements_df
