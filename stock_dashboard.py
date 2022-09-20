@@ -5,8 +5,7 @@ st.title('Company Financials Dashboard')
 
 # cache JSON data
 stock_symbol = st.text_input(
-    "1) What stock would you like to analyze?",
-    value= "Enter stock ticker"
+    "1) Enter stock ticker below: "
 )
 
 stock= DataJson(stock_symbol)
