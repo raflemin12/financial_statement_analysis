@@ -16,11 +16,10 @@ class DataJson:
 
         # Assign to self object
         self.stock_symbol = stock_symbol
-        self.financial_statement = ['income-statement', 'key-metrics', 'cash-flow-statement', 'balance-sheet-statement']
+        self.financial_statement = ['income-statement', 'cash-flow-statement', 'balance-sheet-statement']
         self.income_request_json = self.get_json_data(self.set_url(self.financial_statement[0]))
-        self.key_metric_request_json = self.get_json_data(self.set_url(self.financial_statement[1]))
-        self.cashflow_request_json = self.get_json_data(self.set_url(self.financial_statement[2]))
-        self.balance_request_json = self.get_json_data(self.set_url(self.financial_statement[3]))
+        self.cashflow_request_json = self.get_json_data(self.set_url(self.financial_statement[1]))
+        self.balance_request_json = self.get_json_data(self.set_url(self.financial_statement[2]))
 
     def set_url(self, financial_statement: str):
         return f'{self.BASE_URL}/{financial_statement}/{self.stock_symbol}'
