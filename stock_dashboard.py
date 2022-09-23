@@ -1,5 +1,6 @@
 import streamlit as st
-from fin_classes import DataJson, json_to_dict, dict_to_dataframe, clean_rows, json_to_df
+from st_aggrid import AgGrid
+from fin_classes import DataJson, json_to_df
 
 st.title('Company Financials Dashboard')
 
